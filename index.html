@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>House</title>
+    <meta name="description" content="360 Video — A-Frame">
+    <script src="http://sandbox.journovation.com/userfiles/aframe/dist/aframe-master.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+    <script>
+      AFRAME.registerComponent('modify-materials', {
+        init: function () {
+          // Wait for model to load.
+          this.el.addEventListener('model-loaded', () => {
+            // Grab the mesh / scene.
+            const obj = this.el.getObject3D('mesh');
+            // Go over the submeshes and modify materials we want.
+            obj.traverse(node => {
+              if (node.name.indexOf('ship') !== -1) {
+                node.material.color.set('red');
+              }
+            });
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <H1>House</H1>
+
+    <a-scene background="color: #ECECEC">
+      <a-assets>
+        <a-asset-item id="houseModel" src="house.glb"></a-asset-item>
+      </a-assets>
+      <a-entity gltf-model="#houseModel" modify-materials></a-entity>
+    </a-scene>
+
+  </body>
+</html>
